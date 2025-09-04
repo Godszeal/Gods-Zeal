@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Photo Enhancer Pro | AI-Powered Photo Editing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --gray: #e2e8f0;
+            --gray-dark: #94a3b8;
+            --success: #10b981;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 24px;
+            --border-radius-xxl: 32px;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+            --font-size-6xl: 3.75rem;
+        }
+
+        /* Base styles for all devices */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+            font-size: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--darker), #1e1b4b);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Particles background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: calc(var(--spacing-xl) * 1.5) 0 calc(var(--spacing-xxl) * 1.2);
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius-xl);
+            margin-bottom: calc(var(--spacing-lg) * 1.5);
+            z-index: 10;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: var(--font-size-5xl);
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(to right, #8b5cf6, #6366f1, #4ade80);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(79, 70, 229, 0.2);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: var(--font-size-xl);
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto var(--spacing-lg);
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            margin-bottom: calc(var(--spacing-lg) * 1.5);
+        }
+
+        .upload-section, .preview-section {
+            flex: 1;
+            min-width: 300px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-lg);
+            box-shadow: var(--card-shadow);
+            color: var(--dark);
+            transition: var(--transition);
+            transform: translateY(0);
+            position: relative;
+        }
+
+        .upload-section:hover, .preview-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: var(--font-size-3xl);
+            color: var(--darker);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            position: relative;
+            padding-bottom: var(--spacing-sm);
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            height: 3px;
+            width: 50px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 3px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--gray);
+            border-radius: var(--border-radius-lg);
+            padding: calc(var(--spacing-lg) * 1.5) var(--spacing-md);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(241, 245, 249, 0.5);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .upload-text {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--darker);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .upload-subtext {
+            color: var(--gray-dark);
+            font-size: var(--font-size-sm);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .controls {
+            margin-top: var(--spacing-md);
+        }
+
+        .control-group {
+            margin-bottom: calc(var(--spacing-md) * 1.2);
+        }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+            color: var(--darker);
+            font-size: var(--font-size-md);
+        }
+
+        .slider-value {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: var(--gray);
+            border-radius: 4px;
+            outline: none;
+            margin: var(--spacing-xs) 0;
+        }
+
+        /* Mobile touch-friendly slider */
+        @media (max-width: 768px) {
+            input[type="range"] {
+                height: 12px;
+            }
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Larger touch target for mobile */
+        @media (max-width: 768px) {
+            input[type="range"]::-webkit-slider-thumb {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .button-group {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: calc(var(--spacing-sm) * 1.5) var(--spacing-lg);
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: var(--font-size-md);
+            transition: var(--transition);
+            flex: 1;
+            min-width: 140px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        /* Larger buttons for mobile */
+        @media (max-width: 768px) {
+            button {
+                min-width: 100%;
+                padding: calc(var(--spacing-md) * 1.2) var(--spacing-lg);
+                font-size: var(--font-size-lg);
+            }
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .primary-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 700;
+        }
+
+        .primary-btn:active {
+            transform: translateY(1px);
+        }
+
+        .secondary-btn {
+            background: var(--gray);
+            color: var(--dark);
+        }
+
+        .secondary-btn:hover {
+            background: #dbe0e6;
+        }
+
+        .reset-btn {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .reset-btn:hover {
+            background: #fecaca;
+        }
+
+        .download-btn {
+            background: linear-gradient(to right, var(--success), #059669);
+            color: white;
+            font-weight: 700;
+            padding: calc(var(--spacing-sm) * 1.8) var(--spacing-lg);
+            font-size: calc(var(--font-size-md) * 1.1);
+            flex: 100%;
+        }
+
+        .download-btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .preview-section {
+            position: relative;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #e2e8f0;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: var(--spacing-md);
+            border: 1px solid var(--gray);
+        }
+
+        #originalCanvas, #enhancedCanvas {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+
+        .view-toggle {
+            position: absolute;
+            bottom: var(--spacing-md);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: calc(var(--spacing-xs) * 0.8) var(--spacing-md);
+            display: flex;
+            gap: var(--spacing-xs);
+            z-index: 10;
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: 1px solid var(--gray);
+            color: var(--light);
+            padding: calc(var(--spacing-xs) * 0.6) var(--spacing-sm);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: var(--font-size-sm);
+        }
+
+        .toggle-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-md) var(--spacing-sm);
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: var(--darker);
+            font-size: var(--font-size-sm);
+        }
+
+        .feature-desc {
+            font-size: var(--font-size-xs);
+            color: var(--gray-dark);
+            margin-top: var(--spacing-xs);
+        }
+
+        .ai-badge {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: linear-gradient(to right, var(--accent), #db2777);
+            color: white;
+            padding: var(--spacing-xs) calc(var(--spacing-sm) * 1.2);
+            border-radius: 20px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(236, 72, 153, 0.3);
+            z-index: 5;
+        }
+
+        .processing-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 23, 42, 0.85);
+            color: white;
+            padding: var(--spacing-lg) calc(var(--spacing-lg) * 1.5);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            display: none;
+            z-index: 20;
+            max-width: 90%;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-sm);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-lg) 0;
+            color: var(--gray);
+            font-size: var(--font-size-sm);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+            flex-wrap: wrap;
+            padding: 0 var(--spacing-md);
+        }
+
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: var(--font-size-sm);
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        /* Responsive design - Mobile first approach */
+        /* Base styles for smallest screens */
+        @media (max-width: 480px) {
+            :root {
+                --spacing-xs: 6px;
+                --spacing-sm: 10px;
+                --spacing-md: 14px;
+                --spacing-lg: 20px;
+                --spacing-xl: 26px;
+                --spacing-xxl: 36px;
+                --font-size-xs: 0.7rem;
+                --font-size-sm: 0.8rem;
+                --font-size-md: 0.9rem;
+                --font-size-lg: 1rem;
+                --font-size-xl: 1.1rem;
+                --font-size-2xl: 1.25rem;
+                --font-size-3xl: 1.5rem;
+                --font-size-4xl: 1.8rem;
+                --font-size-5xl: 2.2rem;
+                --font-size-6xl: 2.6rem;
+            }
+            
+            .container {
+                padding: 12px;
+            }
+            
+            h1 {
+                font-size: var(--font-size-4xl);
+                line-height: 1.15;
+            }
+            
+            .subtitle {
+                font-size: var(--font-size-lg);
+            }
+            
+            .main-content {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .upload-section, .preview-section {
+                padding: var(--spacing-md);
+                border-radius: var(--border-radius-md);
+            }
+            
+            h2 {
+                font-size: var(--font-size-2xl);
+                margin-bottom: var(--spacing-md);
+            }
+            
+            .image-container {
+                height: 300px;
+                border-radius: var(--border-radius-md);
+            }
+            
+            .upload-area {
+                padding: var(--spacing-md) var(--spacing-sm);
+            }
+            
+            .upload-icon {
+                font-size: 2.2rem;
+            }
+            
+            .upload-text {
+                font-size: var(--font-size-md);
+            }
+            
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-xs);
+            }
+            
+            .feature-icon {
+                font-size: 1.5rem;
+            }
+            
+            .feature-title {
+                font-size: var(--font-size-xs);
+            }
+            
+            .feature-desc {
+                font-size: 0.65rem;
+            }
+            
+            .ai-badge {
+                top: 8px;
+                right: 8px;
+                padding: 3px 8px;
+                font-size: 0.65rem;
+            }
+            
+            .view-toggle {
+                bottom: 8px;
+                padding: 3px 10px;
+                gap: 3px;
+            }
+            
+            .toggle-btn {
+                padding: 2px 8px;
+                font-size: 0.65rem;
+            }
+            
+            .processing-indicator {
+                padding: 12px 18px;
+            }
+            
+            .spinner {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .button-group {
+                gap: 8px;
+                margin-top: var(--spacing-md);
+            }
+            
+            button {
+                padding: 12px var(--spacing-sm);
+                font-size: var(--font-size-md);
+                border-radius: var(--border-radius-sm);
+            }
+        }
+
+        /* Small tablets and larger phones */
+        @media (min-width: 481px) and (max-width: 768px) {
+            :root {
+                --spacing-xs: 7px;
+                --spacing-sm: 11px;
+                --spacing-md: 15px;
+                --spacing-lg: 22px;
+                --spacing-xl: 28px;
+                --spacing-xxl: 40px;
+            }
+            
+            .container {
+                padding: 16px;
+            }
+            
+            h1 {
+                font-size: var(--font-size-5xl);
+            }
+            
+            .image-container {
+                height: 350px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Tablets in portrait mode */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            :root {
+                --spacing-xs: 8px;
+                --spacing-sm: 12px;
+                --spacing-md: 16px;
+                --spacing-lg: 24px;
+                --spacing-xl: 32px;
+                --spacing-xxl: 48px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .upload-section, .preview-section {
+                min-width: 100%;
+            }
+            
+            .image-container {
+                height: 450px;
+            }
+        }
+
+        /* Small desktops and large tablets */
+        @media (min-width: 1025px) and (max-width: 1400px) {
+            .image-container {
+                height: 420px;
+            }
+        }
+
+        /* Large desktops */
+        @media (min-width: 1401px) {
+            .image-container {
+                height: 500px;
+            }
+        }
+
+        /* Orientation-specific styles */
+        @media (orientation: landscape) and (max-width: 768px) {
+            .main-content {
+                flex-direction: row;
+            }
+            
+            .upload-section, .preview-section {
+                min-width: 45%;
+            }
+            
+            .image-container {
+                height: 500px;
+            }
+        }
+
+        @media (orientation: portrait) and (max-width: 768px) {
+            .image-container {
+                height: 350px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                color: #000;
+            }
+            
+            #particles-js, .view-toggle, .ai-badge, .button-group {
+                display: none;
+            }
+            
+            .upload-section, .preview-section {
+                background: white !important;
+                color: #000 !important;
+                box-shadow: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+            
+            .container {
+                max-width: 100%;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .upload-section, .preview-section {
+                background: white !important;
+                color: black !important;
+                border: 1px solid black !important;
+            }
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <header>
+            <div class="header-content fade-in">
+                <h1>Photo Enhancer Pro</h1>
+                <p class="subtitle">Transform your photos with AI-powered enhancement tools. Professional results in seconds.</p>
+                
+                <div class="feature-grid fade-in stagger-1">
+                    <div class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <div class="feature-title">AI Enhancement</div>
+                        <div class="feature-desc">Smart auto-adjustments</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <div class="feature-title">Color Grading</div>
+                        <div class="feature-desc">Professional presets</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-title">Detail Recovery</div>
+                        <div class="feature-desc">Recover lost details</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">Real-time Preview</div>
+                        <div class="feature-desc">Instant adjustments</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="upload-section">
+                <h2>Enhance Your Photo</h2>
+                <div class="upload-area" id="dropZone">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">Drag & Drop your image here</div>
+                    <div class="upload-subtext">or click to browse (JPG, PNG, up to 10MB)</div>
+                    <input type="file" id="imageUpload" accept="image/*">
+                </div>
+                
+                <div class="controls">
+                    <h3>Adjustment Controls</h3>
+                    
+                    <div class="control-group">
+                        <label>
+                            <span>Brightness</span>
+                            <span class="slider-value" id="brightnessValue">100</span>%
+                        </label>
+                        <input type="range" id="brightness" min="0" max="200" value="100">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>
+                            <span>Contrast</span>
+                            <span class="slider-value" id="contrastValue">100</span>%
+                        </label>
+                        <input type="range" id="contrast" min="0" max="200" value="100">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>
+                            <span>Saturation</span>
+                            <span class="slider-value" id="saturationValue">100</span>%
+                        </label>
+                        <input type="range" id="saturation" min="0" max="200" value="100">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>
+                            <span>Sharpness</span>
+                            <span class="slider-value" id="sharpnessValue">0</span>
+                        </label>
+                        <input type="range" id="sharpness" min="0" max="100" value="0">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>
+                            <span>Hue</span>
+                            <span class="slider-value" id="hueValue">0</span>°
+                        </label>
+                        <input type="range" id="hue" min="0" max="360" value="0">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>
+                            <span>Exposure</span>
+                            <span class="slider-value" id="exposureValue">0</span>
+                        </label>
+                        <input type="range" id="exposure" min="-50" max="50" value="0">
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="enhanceBtn" class="primary-btn" disabled>Enhance Photo</button>
+                        <button id="resetBtn" class="reset-btn">Reset All</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <div class="ai-badge">AI Enhanced</div>
+                <h2>Preview</h2>
+                <div class="image-container">
+                    <canvas id="originalCanvas"></canvas>
+                    <canvas id="enhancedCanvas" style="display: none;"></canvas>
+                    <div class="processing-indicator" id="processingIndicator">
+                        <div class="spinner"></div>
+                        <div>Enhancing your photo...</div>
+                        <div style="font-size: 0.9rem; margin-top: 8px; opacity: 0.8;">AI processing in progress</div>
+                    </div>
+                </div>
+                
+                <div class="view-toggle">
+                    <button class="toggle-btn active" data-view="enhanced">Enhanced</button>
+                    <button class="toggle-btn" data-view="original">Original</button>
+                </div>
+                
+                <div class="button-group">
+                    <button id="downloadBtn" class="download-btn" disabled>Download Enhanced Photo</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Photo Enhancer Pro | Advanced AI-Powered Photo Editing</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">Help Center</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const imageUpload = document.getElementById('imageUpload');
+            const dropZone = document.getElementById('dropZone');
+            const originalCanvas = document.getElementById('originalCanvas');
+            const enhancedCanvas = document.getElementById('enhancedCanvas');
+            const enhanceBtn = document.getElementById('enhanceBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const processingIndicator = document.getElementById('processingIndicator');
+            
+            // Slider controls
+            const brightnessSlider = document.getElementById('brightness');
+            const contrastSlider = document.getElementById('contrast');
+            const saturationSlider = document.getElementById('saturation');
+            const sharpnessSlider = document.getElementById('sharpness');
+            const hueSlider = document.getElementById('hue');
+            const exposureSlider = document.getElementById('exposure');
+            
+            // Value displays
+            const brightnessValue = document.getElementById('brightnessValue');
+            const contrastValue = document.getElementById('contrastValue');
+            const saturationValue = document.getElementById('saturationValue');
+            const sharpnessValue = document.getElementById('sharpnessValue');
+            const hueValue = document.getElementById('hueValue');
+            const exposureValue = document.getElementById('exposureValue');
+            
+            // View toggle buttons
+            const toggleButtons = document.querySelectorAll('.toggle-btn');
+            
+            // Original image data
+            let originalImage = null;
+            let originalImageData = null;
+            let isProcessing = false;
+            
+            // Initialize particles.js
+            initParticles();
+            
+            // Set up responsive canvas sizing
+            setupResponsiveCanvas();
+            
+            // Update slider value displays
+            setupSlider(brightnessSlider, brightnessValue, '%');
+            setupSlider(contrastSlider, contrastValue, '%');
+            setupSlider(saturationSlider, saturationValue, '%');
+            setupSlider(sharpnessSlider, sharpnessValue);
+            setupSlider(hueSlider, hueValue, '°');
+            setupSlider(exposureSlider, exposureValue);
+            
+            // Handle image upload via file input
+            imageUpload.addEventListener('change', handleImageUpload);
+            
+            // Handle drag and drop
+            setupDragAndDrop();
+            
+            // Handle image upload
+            function handleImageUpload(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    
+                    // Validate file type
+                    if (!file.type.match('image.*')) {
+                        alert('Please select an image file (JPG, PNG)');
+                        return;
+                    }
+                    
+                    // Validate file size (max 10MB)
+                    if (file.size > 10 * 1024 * 1024) {
+                        alert('File size exceeds 10MB limit');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        const img = new Image();
+                        img.onload = function() {
+                            // Set canvas dimensions (responsive)
+                            const container = document.querySelector('.image-container');
+                            const containerWidth = container.clientWidth;
+                            const containerHeight = container.clientHeight;
+                            
+                            let width = img.width;
+                            let height = img.height;
+                            
+                            // Calculate dimensions to fit container while maintaining aspect ratio
+                            const ratio = Math.min(containerWidth / width, containerHeight / height, 1);
+                            width = width * ratio;
+                            height = height * ratio;
+                            
+                            originalCanvas.width = width;
+                            originalCanvas.height = height;
+                            enhancedCanvas.width = width;
+                            enhancedCanvas.height = height;
+                            
+                            // Draw original image
+                            const ctx = originalCanvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            
+                            // Store original image data
+                            originalImage = img;
+                            originalImageData = ctx.getImageData(0, 0, width, height);
+                            
+                            // Show original image by default
+                            originalCanvas.style.display = 'block';
+                            enhancedCanvas.style.display = 'none';
+                            
+                            // Enable enhance button
+                            enhanceBtn.disabled = false;
+                            downloadBtn.disabled = true;
+                            
+                            // Reset sliders to default
+                            resetSliders();
+                        };
+                        
+                        img.src = event.target.result;
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            }
+            
+            // Reset all sliders to default values
+            function resetSliders() {
+                brightnessSlider.value = 100;
+                contrastSlider.value = 100;
+                saturationSlider.value = 100;
+                sharpnessSlider.value = 0;
+                hueSlider.value = 0;
+                exposureSlider.value = 0;
+                
+                brightnessValue.textContent = '100';
+                contrastValue.textContent = '100';
+                saturationValue.textContent = '100';
+                sharpnessValue.textContent = '0';
+                hueValue.textContent = '0';
+                exposureValue.textContent = '0';
+            }
+            
+            // Enhance image
+            enhanceBtn.addEventListener('click', function() {
+                if (!originalImage || isProcessing) return;
+                
+                isProcessing = true;
+                processingIndicator.style.display = 'block';
+                enhanceBtn.disabled = true;
+                
+                // Simulate AI processing time
+                setTimeout(() => {
+                    processImage();
+                    isProcessing = false;
+                    processingIndicator.style.display = 'none';
+                    enhanceBtn.disabled = false;
+                    downloadBtn.disabled = false;
+                    
+                    // Show enhanced image by default after processing
+                    document.querySelector('[data-view="enhanced"]').classList.add('active');
+                    document.querySelector('[data-view="original"]').classList.remove('active');
+                    originalCanvas.style.display = 'none';
+                    enhancedCanvas.style.display = 'block';
+                }, 800);
+            });
+            
+            // Reset to original
+            resetBtn.addEventListener('click', function() {
+                if (!originalImage) return;
+                
+                resetSliders();
+                
+                // Show original image
+                const ctx = originalCanvas.getContext('2d');
+                ctx.putImageData(originalImageData, 0, 0);
+                
+                originalCanvas.style.display = 'block';
+                enhancedCanvas.style.display = 'none';
+                
+                // Update toggle buttons
+                document.querySelector('[data-view="enhanced"]').classList.remove('active');
+                document.querySelector('[data-view="original"]').classList.add('active');
+                
+                // Disable download button
+                downloadBtn.disabled = true;
+            });
+            
+            // View toggle functionality
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const view = this.getAttribute('data-view');
+                    
+                    toggleButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    if (view === 'enhanced') {
+                        originalCanvas.style.display = 'none';
+                        enhancedCanvas.style.display = 'block';
+                    } else {
+                        originalCanvas.style.display = 'block';
+                        enhancedCanvas.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Download enhanced image
+            downloadBtn.addEventListener('click', function() {
+                if (!originalImage) return;
+                
+                const link = document.createElement('a');
+                link.download = 'enhanced-photo.png';
+                link.href = enhancedCanvas.toDataURL('image/png');
+                link.click();
+            });
+            
+            // Image processing functions
+            function processImage() {
+                if (!originalImage) return;
+                
+                const width = originalCanvas.width;
+                const height = originalCanvas.height;
+                
+                // Get enhancement values
+                const brightness = parseInt(brightnessSlider.value) / 100;
+                const contrast = parseInt(contrastSlider.value) / 100;
+                const saturation = parseInt(saturationSlider.value) / 100;
+                const sharpness = parseInt(sharpnessSlider.value);
+                const hue = parseInt(hueSlider.value);
+                const exposure = parseInt(exposureSlider.value) / 100;
+                
+                // Create enhanced image
+                const ctx = enhancedCanvas.getContext('2d');
+                ctx.drawImage(originalImage, 0, 0, width, height);
+                
+                // Apply filters
+                applyBrightnessContrast(ctx, width, height, brightness, contrast);
+                applySaturation(ctx, width, height, saturation);
+                applyHue(ctx, width, height, hue);
+                applyExposure(ctx, width, height, exposure);
+                if (sharpness > 0) {
+                    applySharpness(ctx, width, height, sharpness);
+                }
+            }
+            
+            function applyBrightnessContrast(ctx, width, height, brightness, contrast) {
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                
+                // Adjust brightness and contrast
+                const factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    // Brightness
+                    data[i] = data[i] * brightness;
+                    data[i + 1] = data[i + 1] * brightness;
+                    data[i + 2] = data[i + 2] * brightness;
+                    
+                    // Contrast
+                    data[i] = factor * (data[i] - 128) + 128;
+                    data[i + 1] = factor * (data[i + 1] - 128) + 128;
+                    data[i + 2] = factor * (data[i + 2] - 128) + 128;
+                    
+                    // Clamp values between 0-255
+                    data[i] = Math.max(0, Math.min(255, data[i]));
+                    data[i + 1] = Math.max(0, Math.min(255, data[i + 1]));
+                    data[i + 2] = Math.max(0, Math.min(255, data[i + 2]));
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+            }
+            
+            function applySaturation(ctx, width, height, saturation) {
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    
+                    const gray = 0.2989 * r + 0.5870 * g + 0.1140 * b;
+                    
+                    data[i] = gray + saturation * (r - gray);
+                    data[i + 1] = gray + saturation * (g - gray);
+                    data[i + 2] = gray + saturation * (b - gray);
+                    
+                    // Clamp values between 0-255
+                    data[i] = Math.max(0, Math.min(255, data[i]));
+                    data[i + 1] = Math.max(0, Math.min(255, data[i + 1]));
+                    data[i + 2] = Math.max(0, Math.min(255, data[i + 2]));
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+            }
+            
+            function applyHue(ctx, width, height, hue) {
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                
+                // Convert hue to radians for rotation
+                const hueRad = hue * Math.PI / 180;
+                const cosA = Math.cos(hueRad);
+                const sinA = Math.sin(hueRad);
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    let r = data[i];
+                    let g = data[i + 1];
+                    let b = data[i + 2];
+                    
+                    // Convert to HSL (simplified)
+                    const max = Math.max(r, g, b);
+                    const min = Math.min(r, g, b);
+                    const diff = max - min;
+                    
+                    // Apply hue rotation in RGB space (simplified)
+                    const gray = (r + g + b) / 3;
+                    const xr = r - gray;
+                    const xg = g - gray;
+                    const xb = b - gray;
+                    
+                    r = gray + xr * cosA + xg * sinA;
+                    g = gray - xr * sinA + xg * cosA;
+                    b = gray + xb;
+                    
+                    // Clamp values
+                    data[i] = Math.max(0, Math.min(255, r));
+                    data[i + 1] = Math.max(0, Math.min(255, g));
+                    data[i + 2] = Math.max(0, Math.min(255, b));
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+            }
+            
+            function applyExposure(ctx, width, height, exposure) {
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    // Apply exposure adjustment
+                    data[i] = Math.min(255, data[i] * (1 + exposure));
+                    data[i + 1] = Math.min(255, data[i + 1] * (1 + exposure));
+                    data[i + 2] = Math.min(255, data[i + 2] * (1 + exposure));
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+            }
+            
+            function applySharpness(ctx, width, height, amount) {
+                // Simple sharpening using convolution
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                const tempData = new Uint8ClampedArray(data);
+                
+                // Sharpening kernel
+                const kernel = [
+                    [0, -1, 0],
+                    [-1, 5, -1],
+                    [0, -1, 0]
+                ];
+                
+                // Adjust kernel strength based on amount
+                const strength = amount / 50;
+                kernel[1][1] = 4 * strength + 1;
+                
+                for (let y = 1; y < height - 1; y++) {
+                    for (let x = 1; x < width - 1; x++) {
+                        const idx = (y * width + x) * 4;
+                        
+                        let r = 0, g = 0, b = 0;
+                        
+                        for (let ky = -1; ky <= 1; ky++) {
+                            for (let kx = -1; kx <= 1; kx++) {
+                                const kidx = ((y + ky) * width + (x + kx)) * 4;
+                                const weight = kernel[ky + 1][kx + 1];
+                                
+                                r += tempData[kidx] * weight;
+                                g += tempData[kidx + 1] * weight;
+                                b += tempData[kidx + 2] * weight;
+                            }
+                        }
+                        
+                        data[idx] = Math.max(0, Math.min(255, r));
+                        data[idx + 1] = Math.max(0, Math.min(255, g));
+                        data[idx + 2] = Math.max(0, Math.min(255, b));
+                    }
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+            }
+            
+            // Helper functions for responsiveness
+            function initParticles() {
+                if (typeof particlesJS !== 'undefined') {
+                    particlesJS('particles-js', {
+                        particles: {
+                            number: { value: Math.min(60, window.innerWidth / 20), density: { enable: true, value_area: 800 } },
+                            color: { value: ['#6366f1', '#8b5cf6', '#ec4899'] },
+                            shape: { type: 'circle' },
+                            opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+                            size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1, sync: false } },
+                            line_linked: { enable: true, distance: 150, color: '#a5b4fc', opacity: 0.2, width: 1 },
+                            move: { 
+                                enable: true, 
+                                speed: window.innerWidth > 768 ? 1 : 0.6, 
+                                direction: 'none', 
+                                random: true, 
+                                straight: false, 
+                                out_mode: 'out', 
+                                bounce: false 
+                            }
+                        },
+                        interactivity: {
+                            detect_on: 'canvas',
+                            events: {
+                                onhover: { enable: true, mode: 'grab' },
+                                onclick: { enable: true, mode: 'push' },
+                                resize: true
+                            },
+                            modes: {
+                                grab: { distance: 140, line_linked: { opacity: 0.5 } },
+                                push: { particles_nb: 4 }
+                            }
+                        },
+                        retina_detect: true
+                    });
+                }
+            }
+            
+            function setupResponsiveCanvas() {
+                // Handle window resize
+                window.addEventListener('resize', function() {
+                    if (originalImage) {
+                        // Redraw the image with new dimensions if needed
+                        const container = document.querySelector('.image-container');
+                        const containerWidth = container.clientWidth;
+                        const containerHeight = container.clientHeight;
+                        
+                        let width = originalImage.width;
+                        let height = originalImage.height;
+                        
+                        // Calculate dimensions to fit container while maintaining aspect ratio
+                        const ratio = Math.min(containerWidth / width, containerHeight / height, 1);
+                        width = width * ratio;
+                        height = height * ratio;
+                        
+                        originalCanvas.width = width;
+                        originalCanvas.height = height;
+                        enhancedCanvas.width = width;
+                        enhancedCanvas.height = height;
+                        
+                        // Redraw the image
+                        const ctx = originalCanvas.getContext('2d');
+                        ctx.drawImage(originalImage, 0, 0, width, height);
+                        
+                        // Update original image data
+                        originalImageData = ctx.getImageData(0, 0, width, height);
+                    }
+                });
+            }
+            
+            function setupSlider(slider, valueElement, suffix = '') {
+                slider.addEventListener('input', function() {
+                    valueElement.textContent = this.value + suffix;
+                });
+                
+                // For touch devices, add touch events for better responsiveness
+                slider.addEventListener('touchstart', function() {
+                    this.classList.add('active');
+                });
+                
+                slider.addEventListener('touchend', function() {
+                    this.classList.remove('active');
+                });
+            }
+            
+            function setupDragAndDrop() {
+                dropZone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    dropZone.style.borderColor = '#6366f1';
+                    dropZone.style.backgroundColor = 'rgba(99, 102, 241, 0.1)';
+                });
+                
+                dropZone.addEventListener('dragleave', function() {
+                    dropZone.style.borderColor = '';
+                    dropZone.style.backgroundColor = '';
+                });
+                
+                dropZone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    dropZone.style.borderColor = '';
+                    dropZone.style.backgroundColor = '';
+                    
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                        const file = e.dataTransfer.files[0];
+                        if (file.type.match('image.*')) {
+                            imageUpload.files = e.dataTransfer.files;
+                            handleImageUpload({ target: imageUpload });
+                        }
+                    }
+                });
+                
+                // Make the entire drop zone clickable
+                dropZone.addEventListener('click', function() {
+                    imageUpload.click();
+                });
+            }
+            
+            // Initialize with animation classes
+            document.querySelectorAll('.fade-in').forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Add click effect to buttons
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Skip effect for disabled buttons
+                    if (this.disabled) return;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    
+                    const x = e.clientX - e.target.getBoundingClientRect().left;
+                    const y = e.clientY - e.target.getBoundingClientRect().top;
+                    
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Accessibility improvements
+            document.querySelectorAll('button, [role="button"]').forEach(el => {
+                el.setAttribute('role', 'button');
+                if (!el.hasAttribute('aria-label')) {
+                    el.setAttribute('aria-label', el.textContent || 'Button');
+                }
+            });
+            
+            // Handle keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    processingIndicator.style.display = 'none';
+                    isProcessing = false;
+                    enhanceBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
